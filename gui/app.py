@@ -43,6 +43,7 @@ class MainWindow(QMainWindow):
 		# ボタンのクリックイベント
 		self.btn_camera.clicked.connect(self.camera_start)
 		self.btn_capture.clicked.connect(self.capture_image)
+		self.btn_show_processed.clicked.connect(self.show_image)
 
     # カメラのインスタンスを生成（Noneは未起動）
 		self.camera = None
@@ -86,6 +87,32 @@ class MainWindow(QMainWindow):
 				pixmap = QPixmap.fromImage(qt_img)
 				self.image_label.setPixmap(pixmap)
 	
+  # 加工後の画像を表示する
+	def show_image(self):
+		print("加工後画像表示ボタンが押されました。")
+		# 画像を加工する
+		lecture05_01() 
+		# 新規ウィンドウ(QDialog)で画像を表示
+		img = cv2.imread('output_images/lecture05_01_k24098.png')
+		if img is not None:
+			rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+			h, w, ch = rgb_img.shape
+			bytes_per_line = ch * w
+			qt_img = QImage(rgb_img.data, w, h, bytes_per_line, QImage.Format_RGB888)
+			pixmap = QPixmap.fromImage(qt_img)
+
+			from PySide6.QtWidgets import QDialog, QVBoxLayout
+			dialog = QDialog(self)
+			dialog.setWindowTitle("加工後画像表示")
+			dialog.resize(w, h)
+			layout = QVBoxLayout(dialog)
+			label = QLabel(dialog)
+			label.setPixmap(pixmap)
+			label.setAlignment(Qt.AlignCenter)
+			layout.addWidget(label)
+			dialog.exec()
+		else:
+			print("画像の読み込みに失敗しました。")
 
 def app():
 	app = QApplication(sys.argv)

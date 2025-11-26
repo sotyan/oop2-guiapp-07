@@ -77,7 +77,7 @@ class MyVideoCapture:
         """
         return self.captured_img
 
-    def write_img(self, filepath: str = 'output_images/camera_capture.png') -> None:
+    def write_img(self, filepath: str = 'images/camera_capture.png') -> None:
         """キャプチャされた画像をファイルに保存する。
 
         Args:
