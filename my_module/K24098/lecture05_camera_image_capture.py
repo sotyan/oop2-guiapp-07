@@ -77,7 +77,7 @@ class MyVideoCapture:
         """
         return self.captured_img
 
-    def write_img(self, filepath: str = 'output_images/camera_capture.png') -> None:
+    def write_img(self, filepath: str = 'images/camera_capture.png') -> None:
         """キャプチャされた画像をファイルに保存する。
 
         Args:
@@ -96,6 +96,16 @@ class MyVideoCapture:
         if hasattr(self, 'cap') and self.cap.isOpened():
             self.cap.release()
         cv2.destroyAllWindows()
+    
+    def capture_image(self):
+      # 1枚だけ撮影して保存
+      ret, frame = self.cap.read()
+      if not ret:
+          raise ValueError("カメラ画像の取得に失敗しました。")
+      self.captured_img = frame
+      self.write_img()
+      self.loop_break = 1
+    
 
 
 if __name__ == "__main__":

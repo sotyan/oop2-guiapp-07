@@ -3,15 +3,9 @@ import cv2
 from my_module.K24098.lecture05_camera_image_capture import MyVideoCapture
 
 def lecture05_01():
-
-    # カメラキャプチャ実行
-    app = MyVideoCapture()
-    app.run()
-    capture_img = app.get_img() # キャプチャした画像は保存しない
-
-    # 画像をローカル変数に保存
+    # 画像を取得
     google_img : cv2.Mat = cv2.imread('images/google.png')
-    # capture_imgについては、すでにローカル変数に保存済み（10行目）
+    capture_img : cv2.Mat = cv2.imread('images/camera_capture.png')
 
     g_hight, g_width, g_channel = google_img.shape
     c_hight, c_width, c_channel = capture_img.shape
